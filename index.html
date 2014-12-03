@@ -7,16 +7,19 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/main.css">
     </head>
-    <body>
 
-        <main class="container">
-            <section>
+    <body>
+        <main class="container" ng-app="CommentApp" ng-controller="AjaxController">
+            <section id="subject">
                 <img src="img/super-bass-o-matic-76.jpg" alt="product picture" class="product-picture">
                 <h1>The Super Bass-o-Matic '76</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia cumque deserunt ullam repudiandae nisi corporis! Ipsum, ducimus commodi, itaque porro distinctio consequuntur! Autem doloremque numquam nemo ex nulla tempora quis! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde nihil doloribus excepturi quisquam error possimus veritatis facere, commodi cumque ab atque dolore ducimus obcaecati ipsa, impedit! Consequuntur, eligendi iure cumque!</p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi asperiores consectetur quas totam voluptas? Animi, at doloribus ipsa libero officia pariatur tempora. Commodi deserunt eaque facere facilis magni mollitia possimus.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, facere hic illum iste labore laboriosam mollitia nihil odit quod quos ratione recusandae sapiente soluta tempore ut. Aperiam distinctio dolores neque!
+                </p>
             </section>
 
-            <section>
+            <section id="addComment">
                 <h2>Add a Comment</h2>
                 <!--  
                 put a form here for entering a new comment
@@ -26,6 +29,41 @@
                 http://angular-ui.github.io/bootstrap/#/rating
                 their script file is included below
                 -->
+
+                <form ng-submit="addComment(newComment)">
+                    <!--rating-->
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <rating max="5" ng-model="newComment.rating"></rating>
+                    </div>
+
+                    <!--name-->
+                    <div class="form-group">
+                        <label for="comment-name">Name</label>
+                        <input type="text" id="comment-name" class="form-control"
+                               placeholder="name of the commenter" ng-model="newComment.name"/>
+                    </div>
+
+                    <!--title-->
+                    <div class="form-group">
+                        <label for="comment-title">Title</label>
+                        <input type="text" id="comment-title" class="form-control"
+                               placeholder="title of new comment" ng-model="newComment.title"/>
+                    </div>
+
+                    <!--body-->
+                    <div class="form-group">
+                        <label for="comment-body">Body</label>
+                        <input type="text" id="comment-body" class="form-control"
+                               placeholder="comment body" ng-model="newComment.body"/>
+                    </div>
+
+                    <!--submit-->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" ng-disabled="inserting">Add Comment</button>
+                        <img src="img/ajax-spinner-sm.gif" alt="loading animation" ng-if="inserting"/>
+                    </div>
+                </form>
             </section>
 
             <section>
@@ -35,6 +73,61 @@
                 each comment should also have UI allowing the user to vote up/down the comment
                 as well as delete it
                  -->
+                <p ng-show="comments.length == 0">No comments yet, be the first to review this!</p>
+
+                <p>
+                    <button class="btn btn-primary" ng-click="refreshComments()">Refresh</button>
+                    <img src="img/ajax-spinner-sm.gif" alt="loading animation" ng-if="loading || updating"/>
+                </p>
+
+                <table class="table" ng-if="comments.length > 0">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Comment</th>
+                        <th class="ratingTitle">Rating</th>
+                        <th class = "scoreTitle">Score</th>
+                        <th class="deleteTitle">Delete</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="comment in comments">
+                        <td width=15%>
+                            <p>{{comment.name}}</p>
+                        </td>
+                        <td width="50%">
+                            <strong>{{comment.title}}</strong><br/>
+                            <hr/>
+                            {{comment.body}}
+                        </td>
+
+
+                        <td class="ratingInfo" width=15%>
+                            <rating max="5" ng-model="comment.rating"></rating></p>
+                        </td>
+
+                        <td class="voteInfo" width=10%>
+                            <div class="scoreAmount">
+                                {{comment.score || 0}}
+                            </div>
+
+                            <div class="thumbs">
+                                <span class="glyphicon glyphicon-thumbs-up"
+                                      ng-click="incrementScores(comment, 1)"></span>
+                                <span class="glyphicon glyphicon-thumbs-down" ng-click="incrementScores(comment, -1)"></span>
+                            </div>
+                        </td>
+
+                        <td class="deleteInfo" width=10%>
+                        <span class="glyphicon glyphicon-remove-circle"
+                              ng-click="removeComment(comment)"></span>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
             </section>
 
         </main>

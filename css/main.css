@@ -2,12 +2,60 @@
 
 body {
     font-family: 'Ubuntu', 'Helvetica Neue', 'Helvetica', sans-serif;
-    font-weight: 400;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+h2 {
+    margin-top: 15px;
 }
 
 .product-picture {
     float: left;
-    height: 130px;
+    height: 150px;
     margin-right: 10px;
 }
 
+#addComment {
+    padding: 1em;
+    background-image:url(../img/background.png);
+    opacity:0.9;
+}
+
+.scoreAmount {
+    font-size: 40px;
+    text-align:center;
+}
+
+.thumbs {
+    text-align:center;
+    cursor: pointer;
+}
+
+.deleteInfo {
+    cursor: pointer;
+}
+
+.ratingTitle, .scoreTitle, .deleteTitle, .ratingInfo, .ratingInfo, .deleteInfo{
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #1abc9c;
+    box-shadow: none;
+    border-radius: 2px;
+    padding: 10px 15px;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: 'Open Sans Bold', sans-serif;
+    border: none;
+}
+
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    border-color: #20e1bb;
+    background-color: #20e1bb;
+    box-shadow: none;
+}
