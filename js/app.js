@@ -138,3 +138,4 @@ angular.module('CommentApp', ['ui.bootstrap'])
         };
 
     }); //comment controller
+
